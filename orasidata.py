@@ -1,4 +1,5 @@
 import datetime
+import calendar as cd
 import requests
 
 
@@ -12,6 +13,25 @@ def detaliidatatimp():
     if ziua_curenta == "0":
         ziua_curenta = "7"
     tuplu = (ziua_prescurtata, ziua_intreaga, ora_curenta, ziua_curenta, ceas)
+    return tuplu
+
+
+def detalii_zile():
+    listadezile = []
+    index = 0
+    now = datetime.datetime.now()
+    d = now.strftime('%d.%m.%Y')
+    calendar = cd.Calendar().itermonthdays4(int(now.strftime('%Y')), int(now.strftime('%m')))
+    for el in calendar:
+        zi = str(el[2]) + "." + str(el[1]).replace(f"{el[1]}", f"0{el[1]}") + "." + str(el[0])
+        listadezile.append(zi)
+    for el in listadezile:
+        if el == d:
+            index = listadezile.index(el)
+    azi = listadezile[index]
+    ieri = listadezile[index - 1]
+    alaltaieri = listadezile[index - 2]
+    tuplu = (azi, ieri, alaltaieri, listadezile)
     return tuplu
 
 

@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from tkinter import *
-from orasidata import detaliidatatimp, get_day_of_year, returneaza_temperatura, returneaza_descriere_vremea
+from orasidata import *
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\User\Desktop\zona de lucru\myapp\assets\frame0")
@@ -44,7 +44,7 @@ def update_temperatura():
 def tip_vreme():
     timp = detaliidatatimp()[2]
     vreme = returneaza_descriere_vremea()
-    tip = {"Clear": 1, "Clouds": 2, "Rain": 3}
+    tip = {"Clear": 1, "Clouds": 2, "Rain": 3, "Thunderstorm": 3}
 
     # De la 6 dimineata pana la ora 22
     if timp in range(6, 23) and tip[vreme] == 1:
@@ -72,8 +72,10 @@ canvas = Canvas(
     highlightthickness=0,
     relief="ridge"
 )
-
 canvas.place(x=0, y=0)
+
+zi = detalii_zile()
+
 image_image_1 = PhotoImage(
     file=relative_to_assets("image_1.png"))
 image_1 = canvas.create_image(
@@ -307,61 +309,11 @@ canvas.create_text(
     601.0,
     309.0,
     anchor="nw",
-    text="Mon 20.05.2024",
+    text=zi[0],
     fill="#1E1E1E",
     font=("Rowdies Regular", 16 * -1)
 )
 
-canvas.create_text(
-    626.0,
-    349.0,
-    anchor="nw",
-    text="Food",
-    fill="#000000",
-    font=("Rowdies Regular", 16 * -1)
-)
-
-image_image_9 = PhotoImage(
-    file=relative_to_assets("image_9.png"))
-image_9 = canvas.create_image(
-    589.0,
-    358.0,
-    image=image_image_9
-)
-
-canvas.create_text(
-    626.0,
-    411.0,
-    anchor="nw",
-    text="Workout",
-    fill="#000000",
-    font=("Rowdies Regular", 16 * -1)
-)
-
-image_image_10 = PhotoImage(
-    file=relative_to_assets("image_10.png"))
-image_10 = canvas.create_image(
-    589.0,
-    418.0,
-    image=image_image_10
-)
-
-canvas.create_text(
-    626.0,
-    380.0,
-    anchor="nw",
-    text="Water",
-    fill="#000000",
-    font=("Rowdies Regular", 16 * -1)
-)
-
-image_image_11 = PhotoImage(
-    file=relative_to_assets("image_11.png"))
-image_11 = canvas.create_image(
-    589.0,
-    388.0,
-    image=image_image_11
-)
 
 image_image_12 = PhotoImage(
     file=relative_to_assets("image_12.png"))
@@ -400,60 +352,9 @@ canvas.create_text(
     381.0,
     309.0,
     anchor="nw",
-    text="Mon 20.05.2024",
+    text=zi[1],
     fill="#1E1E1E",
     font=("Rowdies Regular", 16 * -1)
-)
-
-canvas.create_text(
-    406.0,
-    349.0,
-    anchor="nw",
-    text="Food",
-    fill="#000000",
-    font=("Rowdies Regular", 16 * -1)
-)
-
-image_image_14 = PhotoImage(
-    file=relative_to_assets("image_14.png"))
-image_14 = canvas.create_image(
-    369.0,
-    358.0,
-    image=image_image_14
-)
-
-canvas.create_text(
-    406.0,
-    411.0,
-    anchor="nw",
-    text="Workout",
-    fill="#000000",
-    font=("Rowdies Regular", 16 * -1)
-)
-
-image_image_15 = PhotoImage(
-    file=relative_to_assets("image_15.png"))
-image_15 = canvas.create_image(
-    369.0,
-    418.0,
-    image=image_image_15
-)
-
-canvas.create_text(
-    406.0,
-    380.0,
-    anchor="nw",
-    text="Water",
-    fill="#000000",
-    font=("Rowdies Regular", 16 * -1)
-)
-
-image_image_16 = PhotoImage(
-    file=relative_to_assets("image_16.png"))
-image_16 = canvas.create_image(
-    369.0,
-    388.0,
-    image=image_image_16
 )
 
 image_image_17 = PhotoImage(
@@ -493,60 +394,9 @@ canvas.create_text(
     161.0,
     309.0,
     anchor="nw",
-    text="Mon 20.05.2024",
+    text=zi[2],
     fill="#1E1E1E",
     font=("Rowdies Regular", 16 * -1)
-)
-
-canvas.create_text(
-    186.0,
-    349.0,
-    anchor="nw",
-    text="Food",
-    fill="#000000",
-    font=("Rowdies Regular", 16 * -1)
-)
-
-image_image_19 = PhotoImage(
-    file=relative_to_assets("image_19.png"))
-image_19 = canvas.create_image(
-    149.0,
-    358.0,
-    image=image_image_19
-)
-
-canvas.create_text(
-    186.0,
-    411.0,
-    anchor="nw",
-    text="Workout",
-    fill="#000000",
-    font=("Rowdies Regular", 16 * -1)
-)
-
-image_image_20 = PhotoImage(
-    file=relative_to_assets("image_20.png"))
-image_20 = canvas.create_image(
-    149.0,
-    418.0,
-    image=image_image_20
-)
-
-canvas.create_text(
-    186.0,
-    380.0,
-    anchor="nw",
-    text="Water",
-    fill="#000000",
-    font=("Rowdies Regular", 16 * -1)
-)
-
-image_image_21 = PhotoImage(
-    file=relative_to_assets("image_21.png"))
-image_21 = canvas.create_image(
-    149.0,
-    388.0,
-    image=image_image_21
 )
 
 image_image_22 = PhotoImage(
