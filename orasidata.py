@@ -24,26 +24,12 @@ def get_day_of_year():
     return tuplu
 
 
-def returneaza_vremea():
-    # Introdu aici cheia ta API obținută de la OpenWeatherMap
-    api_key = "33521462be9a9eb3b7970c167d4e2003"
-    city_name = "Timisoara"
-    base_url = "http://api.openweathermap.org/data/2.5/weather?"
-
-    # Construieste URL-ul final
-    complete_url = base_url + "appid=" + api_key + "&q=" + city_name + "&units=metric"
-
-    # Trimite cererea HTTP
-    response = requests.get(complete_url)
-
-    # Extrage datele în format JSON
-    data = response.json()
-    print(data)
+def returneaza_temperatura():
     # Verifică dacă cererea a fost cu succes
     if data["cod"] != "404":
         main = data["main"]
         temperature = main["temp"]
-        temperature = int(temperature)
+        temperature = round(temperature)
         # print(f"Temperatura actuală în {city_name} este {temperature}°C")
         return str(temperature)
     else:
@@ -51,4 +37,28 @@ def returneaza_vremea():
         return "Eroare"
 
 
-print(returneaza_vremea())
+def returneaza_descriere_vremea():
+    if data["cod"] != "404":
+        weather = data["weather"]
+        vreme = weather[0]["main"]
+        return vreme
+    else:
+        print("Orașul nu a fost găsit!")
+        return "Eroare"
+
+
+# Introdu aici cheia ta API obținută de la OpenWeatherMap
+api_key = "33521462be9a9eb3b7970c167d4e2003"
+city_name = "Timisoara"
+base_url = "http://api.openweathermap.org/data/2.5/weather?"
+
+# Construieste URL-ul final
+complete_url = base_url + "appid=" + api_key + "&q=" + city_name + "&units=metric"
+
+# Trimite cererea HTTP
+response = requests.get(complete_url)
+
+# Extrage datele în format JSON
+data = response.json()
+# print(data)
+

@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from tkinter import *
-from orasidata import detaliidatatimp, get_day_of_year, returneaza_vremea
+from orasidata import detaliidatatimp, get_day_of_year, returneaza_temperatura, returneaza_descriere_vremea
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\User\Desktop\zona de lucru\myapp\assets\frame0")
@@ -35,10 +35,27 @@ def update_ceas():
     canvas.after(1000, update_ceas)
 
 
-def update_vreme():
-    temperatura = returneaza_vremea()
+def update_temperatura():
+
+    temperatura = returneaza_temperatura()
     canvas.itemconfig(grade, text=temperatura)
-    canvas.after(1000, update_vreme)
+
+
+def tip_vreme():
+    timp = detaliidatatimp()[2]
+    vreme = returneaza_descriere_vremea()
+    tip = {"Clear": 1, "Clouds": 2, "Rain": 3}
+
+    # De la 6 dimineata pana la ora 22
+    if timp in range(6, 23) and tip[vreme] == 1:
+        canvas.itemconfig(image_6, image=iconvreme1)
+    # De la ora 23 pana la 6 dimineata
+    if (timp == 23 or timp in range(0, 6)) and tip[vreme] == 1:
+        canvas.itemconfig(image_6, image=iconvreme2)
+    if tip[vreme] == 2:
+        canvas.itemconfig(image_6, image=iconvreme4)
+    if tip[vreme] == 3:
+        canvas.itemconfig(image_6, image=iconvreme3)
 
 
 window = Tk()
@@ -188,7 +205,8 @@ grade = canvas.create_text(
     fill="#FFFFFF",
     font=("Rowdies Regular", 36 * -1)
 )
-update_vreme()
+
+update_temperatura()
 
 iconvreme1 = PhotoImage(
     file=relative_to_assets("sun.png"))
@@ -203,7 +221,7 @@ image_6 = canvas.create_image(
     168.0,
     image=iconvreme1
 )
-
+tip_vreme()
 image_image_7 = PhotoImage(
     file=relative_to_assets("image_7.png"))
 image_7 = canvas.create_image(
@@ -290,7 +308,7 @@ canvas.create_text(
     309.0,
     anchor="nw",
     text="Mon 20.05.2024",
-    fill="#FFFFFF",
+    fill="#1E1E1E",
     font=("Rowdies Regular", 16 * -1)
 )
 
@@ -383,7 +401,7 @@ canvas.create_text(
     309.0,
     anchor="nw",
     text="Mon 20.05.2024",
-    fill="#FFFFFF",
+    fill="#1E1E1E",
     font=("Rowdies Regular", 16 * -1)
 )
 
@@ -476,7 +494,7 @@ canvas.create_text(
     309.0,
     anchor="nw",
     text="Mon 20.05.2024",
-    fill="#FFFFFF",
+    fill="#1E1E1E",
     font=("Rowdies Regular", 16 * -1)
 )
 
