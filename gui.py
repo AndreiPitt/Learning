@@ -65,7 +65,7 @@ window.configure(bg="#9D9D9D")
 
 canvas = Canvas(
     window,
-    bg="#9D9D9D",
+    bg="#4169E1",
     height=700,
     width=900,
     bd=0,
@@ -115,7 +115,7 @@ progress1 = canvas.create_rectangle(
     158.78286743164062,
     193.95391845703125,
     185.20130729675293,
-    fill="#1E1E1E",
+    fill="#00BFFF",
     outline="")
 update_custom_progress_bar(progress1, 35.73651123046875, 158.78286743164062, 193.95391845703125, 185.20130729675293,
                            schimba_in_float()[1])
@@ -131,7 +131,7 @@ progress2 = canvas.create_rectangle(
     124.0,
     193.77297973632812,
     150.4184398651123,
-    fill="#1E1E1E",
+    fill="#00BFFF",
     outline="")
 update_custom_progress_bar(progress2, 35.555572509765625, 124.0, 193.77297973632812, 150.4184398651123,
                            schimba_in_float()[2])
@@ -148,7 +148,7 @@ progress3 = canvas.create_rectangle(
     194.3063201904297,
     193.95391845703125,
     220.724760055542,
-    fill="#1E1E1E",
+    fill="#00BFFF",
     outline="")
 update_custom_progress_bar(progress3, 35.73651123046875, 194.3063201904297, 193.95391845703125, 220.724760055542,
                            schimba_in_float()[0])
@@ -246,7 +246,7 @@ canvas.create_rectangle(
     521.0,
     885.0,
     684.0,
-    fill="#918F8F",
+    fill="#00BFFF",
     outline="")
 
 canvas.create_rectangle(
@@ -254,7 +254,7 @@ canvas.create_rectangle(
     294.0,
     885.0,
     509.0,
-    fill="#908F8F",
+    fill="#00BFFF",
     outline="")
 
 button_image_1 = PhotoImage(
