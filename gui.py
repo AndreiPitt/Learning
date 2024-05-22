@@ -36,7 +36,6 @@ def update_ceas():
 
 
 def update_temperatura():
-
     temperatura = returneaza_temperatura()
     canvas.itemconfig(grade, text=temperatura)
 
@@ -241,7 +240,7 @@ canvas.create_text(
     font=("Rowdies Regular", 36 * -1)
 )
 
-canvas.create_rectangle(
+grafic = canvas.create_rectangle(
     15.0,
     521.0,
     885.0,
@@ -249,13 +248,35 @@ canvas.create_rectangle(
     fill="#00BFFF",
     outline="")
 
-canvas.create_rectangle(
-    15.0,
-    294.0,
-    885.0,
-    509.0,
-    fill="#00BFFF",
-    outline="")
+
+# Frame ul principal - afisaj
+coordFrame = {"x1": 15.0, "y1": 294.0, "x2": 885.0, "y2": 509.0}
+# Frame uri secundare
+coordfs1 = {"x1": 568.0, "y1": 306.0, "x2": 746.5763397216797, "y2": 497.0}
+coordfs2 = {"x1": 348.0, "y1": 306.0, "x2": 526.5763397216797, "y2": 497.0}
+coordfs3 = {"x1": 128.0, "y1": 306.0, "x2": 306.5763397216797, "y2": 497.0}
+
+frame_width = coordFrame["x2"] - coordFrame["x1"]
+frame_height = coordFrame["y2"] - coordFrame["y1"]
+fs1_width = coordfs1["x2"] - coordfs1["x1"]
+fs1_height = coordfs1["y2"] - coordfs1["y1"]
+fs2_width = coordfs2["x2"] - coordfs2["x1"]
+fs2_height = coordfs2["y2"] - coordfs2["y1"]
+fs3_width = coordfs3["x2"] - coordfs3["x1"]
+fs3_height = coordfs3["y2"] - coordfs3["y1"]
+
+mainframe = Frame(window, width=frame_width, height=frame_height, bg="#00BFFF")
+mainframe.place(x=coordFrame["x1"], y=coordFrame["y1"])
+
+fs1 = Frame(window, width=fs1_width, height=fs1_height, bg="#D9D9D9")
+fs1.place(x=coordfs1["x1"], y=coordfs1["y1"])
+
+fs2 = Frame(window, width=fs2_width, height=fs2_height, bg="#D9D9D9")
+fs2.place(x=coordfs2["x1"], y=coordfs2["y1"])
+
+fs3 = Frame(window, width=fs3_width, height=fs3_height, bg="#D9D9D9")
+fs3.place(x=coordfs3["x1"], y=coordfs3["y1"])
+
 
 button_image_1 = PhotoImage(
     file=relative_to_assets("button_1.png"))
@@ -289,132 +310,6 @@ button_2.place(
     height=80.0
 )
 
-canvas.create_rectangle(
-    568.0,
-    306.0,
-    746.5763397216797,
-    497.0,
-    fill="#D9D9D9",
-    outline="")
-
-image_image_8 = PhotoImage(
-    file=relative_to_assets("image_8.png"))
-image_8 = canvas.create_image(
-    582.0,
-    320.0,
-    image=image_image_8
-)
-
-canvas.create_text(
-    601.0,
-    309.0,
-    anchor="nw",
-    text=zi[0],
-    fill="#1E1E1E",
-    font=("Rowdies Regular", 16 * -1)
-)
-
-
-image_image_12 = PhotoImage(
-    file=relative_to_assets("image_12.png"))
-image_12 = canvas.create_image(
-    657.0,
-    470.0,
-    image=image_image_12
-)
-
-canvas.create_text(
-    644.0,
-    482.0,
-    anchor="nw",
-    text="50%",
-    fill="#000000",
-    font=("Rowdies Regular", 11 * -1)
-)
-
-canvas.create_rectangle(
-    348.0,
-    306.0,
-    526.5763397216797,
-    497.0,
-    fill="#D9D9D9",
-    outline="")
-
-image_image_13 = PhotoImage(
-    file=relative_to_assets("image_13.png"))
-image_13 = canvas.create_image(
-    362.0,
-    320.0,
-    image=image_image_13
-)
-
-canvas.create_text(
-    381.0,
-    309.0,
-    anchor="nw",
-    text=zi[1],
-    fill="#1E1E1E",
-    font=("Rowdies Regular", 16 * -1)
-)
-
-image_image_17 = PhotoImage(
-    file=relative_to_assets("image_17.png"))
-image_17 = canvas.create_image(
-    437.0,
-    470.0,
-    image=image_image_17
-)
-
-canvas.create_text(
-    424.0,
-    482.0,
-    anchor="nw",
-    text="50%",
-    fill="#000000",
-    font=("Rowdies Regular", 11 * -1)
-)
-
-canvas.create_rectangle(
-    128.0,
-    306.0,
-    306.5763397216797,
-    497.0,
-    fill="#D9D9D9",
-    outline="")
-
-image_image_18 = PhotoImage(
-    file=relative_to_assets("image_18.png"))
-image_18 = canvas.create_image(
-    142.0,
-    320.0,
-    image=image_image_18
-)
-
-canvas.create_text(
-    161.0,
-    309.0,
-    anchor="nw",
-    text=zi[2],
-    fill="#1E1E1E",
-    font=("Rowdies Regular", 16 * -1)
-)
-
-image_image_22 = PhotoImage(
-    file=relative_to_assets("image_22.png"))
-image_22 = canvas.create_image(
-    217.0,
-    470.0,
-    image=image_image_22
-)
-
-canvas.create_text(
-    204.0,
-    482.0,
-    anchor="nw",
-    text="50%",
-    fill="#000000",
-    font=("Rowdies Regular", 11 * -1)
-)
 
 button_image_3 = PhotoImage(
     file=relative_to_assets("button_3.png"))
