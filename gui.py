@@ -57,6 +57,72 @@ def tip_vreme():
         canvas.itemconfig(image_6, image=iconvreme3)
 
 
+def fct_ajutatoare_pt_butoane_st_dr(operator: str, a: object, b: object, c: object, p1, p2, p3, x: str, y: str, z: str):
+    """"
+    Functia asteapta ca argument stringul "+" sau stringul "-"
+    """
+    if operator == "+":
+        p1 = int(p1) + 1
+        p2 = int(p2) + 1
+        p3 = int(p3) + 1
+        a.itemconfig(d1, text=str(p1) + x[2:])
+        b.itemconfig(d2, text=str(p2) + y[2:])
+        c.itemconfig(d3, text=str(p3) + z[2:])
+    elif operator == "-":
+        p1 = int(p1) - 1  # 11 -- 10
+        p2 = int(p2) - 1  # 10 -- 9
+        p3 = int(p3) - 1  # 9 --- 8
+
+        # Problema !!!!!!!!!!!!!!!
+        print(p3)
+        a.itemconfig(d1, text=str(p1) + x[2:])
+        b.itemconfig(d2, text=str(p2) + y[2:])
+        c.itemconfig(d3, text=str(p3) + z[2:])
+    else:
+        print("EROARE: Operator invalid")
+
+
+def fara_punct(s: str):
+    if s.endswith('.'):
+        return int(s[:-1])
+    else:
+        return int(float(s))
+
+
+def la_dreapta():
+    p1, p2, p3 = "", "", ""
+    a, b, c = canvas1, canvas2, canvas3
+
+    x = a.itemcget(d1, "text")
+    p1 += x[0:2]
+    y = b.itemcget(d2, "text")
+    p2 += y[0:2]
+    z = c.itemcget(d3, "text")
+    p3 += z[0:2]
+    if a.itemcget(d1, "text") == zi[0]:
+        print("Esti deja la ziua curenta")
+        print(zi[0])
+        button_1.configure(state=DISABLED)
+    else:
+        fct_ajutatoare_pt_butoane_st_dr("+", a, b, c, p1, p2, p3, x, y, z)
+
+
+def la_stanga():
+    button_1.configure(state=NORMAL)
+    p1, p2, p3 = "", "", ""
+    a, b, c = canvas1, canvas2, canvas3
+
+    x = a.itemcget(d1, "text")
+    p1 += str(fara_punct(x[0:2]))
+    y = b.itemcget(d2, "text")
+    p2 += str(fara_punct(y[0:2]))
+    z = c.itemcget(d3, "text")
+    p3 += str(fara_punct(z[0:2]))
+
+    # print(p1, p2, p3)
+    fct_ajutatoare_pt_butoane_st_dr("-", a, b, c, p1, p2, p3, x, y, z)
+
+
 window = Tk()
 
 window.geometry("900x700")
@@ -287,7 +353,7 @@ img1 = canvas1.create_image(
     15,
     image=image_image_18
 )
-canvas1.create_text(
+d1 = canvas1.create_text(
     40,
     7,
     anchor="nw",
@@ -307,7 +373,7 @@ image_8 = canvas2.create_image(
     15,
     image=image_image_8
 )
-canvas2.create_text(
+d2 = canvas2.create_text(
     40,
     7,
     anchor="nw",
@@ -327,7 +393,7 @@ image_13 = canvas3.create_image(
     15,
     image=image_image_13
 )
-canvas3.create_text(
+d3 = canvas3.create_text(
     40,
     7,
     anchor="nw",
@@ -343,7 +409,7 @@ button_1 = Button(
     image=button_image_1,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_1 clicked"),
+    command=la_dreapta,
     relief="flat"
 )
 button_1.place(
@@ -359,7 +425,7 @@ button_2 = Button(
     image=button_image_2,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_2 clicked"),
+    command=la_stanga,
     relief="flat"
 )
 button_2.place(
