@@ -248,7 +248,6 @@ grafic = canvas.create_rectangle(
     fill="#00BFFF",
     outline="")
 
-
 # Frame ul principal - afisaj
 coordFrame = {"x1": 15.0, "y1": 294.0, "x2": 885.0, "y2": 509.0}
 # Frame uri secundare
@@ -277,7 +276,67 @@ fs2.place(x=coordfs2["x1"], y=coordfs2["y1"])
 fs3 = Frame(window, width=fs3_width, height=fs3_height, bg="#D9D9D9")
 fs3.place(x=coordfs3["x1"], y=coordfs3["y1"])
 
+# Pe frame 1
+canvas1 = Canvas(fs1, width=fs1_width, height=28, bg="#ffffff", highlightthickness=0, relief="ridge")
+canvas1.place(x=0, y=0)
 
+image_image_18 = PhotoImage(
+    file=relative_to_assets("image_18.png"))
+img1 = canvas1.create_image(
+    16,
+    15,
+    image=image_image_18
+)
+canvas1.create_text(
+    40,
+    7,
+    anchor="nw",
+    text=zi[0],
+    fill="#1E1E1E",
+    font=("Rowdies Regular", 16 * -1),
+)
+
+# Pe frame 2
+canvas2 = Canvas(fs2, width=fs2_width, height=28, bg="#ffffff", highlightthickness=0, relief="ridge")
+canvas2.place(x=0, y=0)
+
+image_image_8 = PhotoImage(
+    file=relative_to_assets("image_8.png"))
+image_8 = canvas2.create_image(
+    16,
+    15,
+    image=image_image_8
+)
+canvas2.create_text(
+    40,
+    7,
+    anchor="nw",
+    text=zi[1],
+    fill="#1E1E1E",
+    font=("Rowdies Regular", 16 * -1),
+)
+
+# Pe frame 3
+canvas3 = Canvas(fs3, width=fs3_width, height=28, bg="#ffffff", highlightthickness=0, relief="ridge")
+canvas3.place(x=0, y=0)
+
+image_image_13 = PhotoImage(
+    file=relative_to_assets("image_13.png"))
+image_13 = canvas3.create_image(
+    16,
+    15,
+    image=image_image_13
+)
+canvas3.create_text(
+    40,
+    7,
+    anchor="nw",
+    text=zi[2],
+    fill="#1E1E1E",
+    font=("Rowdies Regular", 16 * -1),
+)
+
+# Butoane
 button_image_1 = PhotoImage(
     file=relative_to_assets("button_1.png"))
 button_1 = Button(
@@ -309,7 +368,6 @@ button_2.place(
     width=36.0,
     height=80.0
 )
-
 
 button_image_3 = PhotoImage(
     file=relative_to_assets("button_3.png"))
