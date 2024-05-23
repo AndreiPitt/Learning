@@ -65,19 +65,18 @@ def fct_ajutatoare_pt_butoane_st_dr(operator: str, a: object, b: object, c: obje
         p1 = int(p1) + 1
         p2 = int(p2) + 1
         p3 = int(p3) + 1
-        a.itemconfig(d1, text=str(p1) + x[2:])
-        b.itemconfig(d2, text=str(p2) + y[2:])
-        c.itemconfig(d3, text=str(p3) + z[2:])
+        a.itemconfig(d1, text=concat_data(p1, x[2:]))
+        b.itemconfig(d2, text=concat_data(p2, y[2:]))
+        c.itemconfig(d3, text=concat_data(p3, z[2:]))
     elif operator == "-":
-        p1 = int(p1) - 1  # 11 -- 10
-        p2 = int(p2) - 1  # 10 -- 9
-        p3 = int(p3) - 1  # 9 --- 8
+        p1 = int(p1) - 1
+        p2 = int(p2) - 1
+        p3 = int(p3) - 1
 
-        # Problema !!!!!!!!!!!!!!!
-        print(p3)
-        a.itemconfig(d1, text=str(p1) + x[2:])
-        b.itemconfig(d2, text=str(p2) + y[2:])
-        c.itemconfig(d3, text=str(p3) + z[2:])
+        a.itemconfig(d1, text=concat_data(p1, x[2:]))
+        b.itemconfig(d2, text=concat_data(p2, y[2:]))
+        c.itemconfig(d3, text=concat_data(p3, z[2:]))
+
     else:
         print("EROARE: Operator invalid")
 
@@ -89,16 +88,48 @@ def fara_punct(s: str):
         return int(float(s))
 
 
+def concat_data(nr: int, luna_an: str):
+    s = str(nr)
+    if len(s) == 2:
+        if len(luna_an) == 8:
+            ziua = s + luna_an
+        else:
+            ziua = s+"."+luna_an
+        return ziua
+    if len(s) == 1:
+        if s == "9":
+            if len(luna_an) == 8:
+                ziua = s + luna_an
+            else:
+                ziua = s + "." + luna_an
+
+        elif s == "1":
+            ziua = s + "." + luna_an
+            button_2.configure(state=DISABLED)
+            print("1 este prima zi din calendar!")
+            print("--------------------------------")
+        elif s == "2":
+            button_2.configure(state=NORMAL)
+            ziua = s + "." + luna_an
+        else:
+            ziua = s + "." + luna_an
+        return ziua
+    else:
+        print("EROARE la functia concat_data")
+        print("HINT: Probabil len(s) este diferit de 1 sau 2")
+
+
 def la_dreapta():
     p1, p2, p3 = "", "", ""
     a, b, c = canvas1, canvas2, canvas3
 
     x = a.itemcget(d1, "text")
-    p1 += x[0:2]
+    p1 += str(fara_punct(x[0:2]))
     y = b.itemcget(d2, "text")
-    p2 += y[0:2]
+    p2 += str(fara_punct(y[0:2]))
     z = c.itemcget(d3, "text")
-    p3 += z[0:2]
+    p3 += str(fara_punct(z[0:2]))
+
     if a.itemcget(d1, "text") == zi[0]:
         print("Esti deja la ziua curenta")
         print(zi[0])
@@ -119,7 +150,6 @@ def la_stanga():
     z = c.itemcget(d3, "text")
     p3 += str(fara_punct(z[0:2]))
 
-    # print(p1, p2, p3)
     fct_ajutatoare_pt_butoane_st_dr("-", a, b, c, p1, p2, p3, x, y, z)
 
 
