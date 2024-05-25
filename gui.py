@@ -1,6 +1,8 @@
 from pathlib import Path
 
 from tkinter import *
+
+from frameuri import frameuri
 from orasidata import *
 from taskuri import taskuri
 
@@ -66,17 +68,17 @@ def fct_ajutatoare_pt_butoane_st_dr(operator: str, a: object, b: object, c: obje
         p1 = int(p1) + 1
         p2 = int(p2) + 1
         p3 = int(p3) + 1
-        a.itemconfig(d1, text=concat_data(p1, x[2:]))
-        b.itemconfig(d2, text=concat_data(p2, y[2:]))
-        c.itemconfig(d3, text=concat_data(p3, z[2:]))
+        a.itemconfig(frame1.text_canvas, text=concat_data(p1, x[2:]))
+        b.itemconfig(frame2.text_canvas, text=concat_data(p2, y[2:]))
+        c.itemconfig(frame3.text_canvas, text=concat_data(p3, z[2:]))
     elif operator == "-":
         p1 = int(p1) - 1
         p2 = int(p2) - 1
         p3 = int(p3) - 1
 
-        a.itemconfig(d1, text=concat_data(p1, x[2:]))
-        b.itemconfig(d2, text=concat_data(p2, y[2:]))
-        c.itemconfig(d3, text=concat_data(p3, z[2:]))
+        a.itemconfig(frame1.text_canvas, text=concat_data(p1, x[2:]))
+        b.itemconfig(frame2.text_canvas, text=concat_data(p2, y[2:]))
+        c.itemconfig(frame3.text_canvas, text=concat_data(p3, z[2:]))
 
     else:
         print("EROARE: Operator invalid")
@@ -122,16 +124,16 @@ def concat_data(nr: int, luna_an: str):
 
 def la_dreapta():
     p1, p2, p3 = "", "", ""
-    a, b, c = canvas1, canvas2, canvas3
+    a, b, c = frame1.canvas, frame2.canvas, frame3.canvas
 
-    x = a.itemcget(d1, "text")
+    x = a.itemcget(frame1.text_canvas, "text")
     p1 += str(fara_punct(x[0:2]))
-    y = b.itemcget(d2, "text")
+    y = b.itemcget(frame2.text_canvas, "text")
     p2 += str(fara_punct(y[0:2]))
-    z = c.itemcget(d3, "text")
+    z = c.itemcget(frame3.text_canvas, "text")
     p3 += str(fara_punct(z[0:2]))
 
-    if a.itemcget(d1, "text") == zi[0]:
+    if a.itemcget(frame1.text_canvas, "text") == zi[0]:
         print("Esti deja la ziua curenta")
         print(zi[0])
         button_1.configure(state=DISABLED)
@@ -142,13 +144,13 @@ def la_dreapta():
 def la_stanga():
     button_1.configure(state=NORMAL)
     p1, p2, p3 = "", "", ""
-    a, b, c = canvas1, canvas2, canvas3
+    a, b, c = frame1.canvas, frame2.canvas, frame3.canvas
 
-    x = a.itemcget(d1, "text")
+    x = a.itemcget(frame1.text_canvas, "text")
     p1 += str(fara_punct(x[0:2]))
-    y = b.itemcget(d2, "text")
+    y = b.itemcget(frame2.text_canvas, "text")
     p2 += str(fara_punct(y[0:2]))
-    z = c.itemcget(d3, "text")
+    z = c.itemcget(frame3.text_canvas, "text")
     p3 += str(fara_punct(z[0:2]))
 
     fct_ajutatoare_pt_butoane_st_dr("-", a, b, c, p1, p2, p3, x, y, z)
@@ -160,44 +162,7 @@ def addTaskTab():
 
 
 def comanda_addButton():
-    creazaTask()
-
-
-def creazaTask():
-    """
-    Poti adauga 5 task uri
-
-    """
-    pozx, pozy = 20, 40
-    if taskuri.nr_taskuri == 0:
-        task = taskuri(fs1, add_entry, x=pozx, y=pozy)
-        lista_taskuri.append(task)
-        print(f"Am {taskuri.nr_taskuri} task uri")
-    elif taskuri.nr_taskuri == 1:
-        pozy = pozy+20
-        task = taskuri(fs1, add_entry, x=pozx, y=pozy)
-        lista_taskuri.append(task)
-        print(f"Am {taskuri.nr_taskuri} task uri")
-    elif taskuri.nr_taskuri == 2:
-        pozy = pozy+40
-        task = taskuri(fs1, add_entry, x=pozx, y=pozy)
-        lista_taskuri.append(task)
-        print(f"Am {taskuri.nr_taskuri} task uri")
-    elif taskuri.nr_taskuri == 3:
-        pozy = pozy+60
-        task = taskuri(fs1, add_entry, x=pozx, y=pozy)
-        lista_taskuri.append(task)
-        print(f"Am {taskuri.nr_taskuri} task uri")
-    elif taskuri.nr_taskuri == 4:
-        pozy = pozy+80
-        task = taskuri(fs1, add_entry, x=pozx, y=pozy)
-        lista_taskuri.append(task)
-        print(f"Am {taskuri.nr_taskuri} task uri")
-
-        print("Ai atins limita maxima de task-uri!!")
-        button_5.configure(state=DISABLED)
-        print(lista_taskuri)
-
+    taskuri.creaza_task(frame1, entry=add_entry, button=button_5)
     add_window.iconify()
 
 
@@ -216,7 +181,6 @@ add_window.geometry("300x150")
 add_window.configure(bg="#4169E1")
 add_window.title("Add task")
 
-lista_taskuri = []
 
 canvas = Canvas(
     window,
@@ -406,91 +370,19 @@ grafic = canvas.create_rectangle(
 
 # Frame ul principal - afisaj
 coordFrame = {"x1": 15.0, "y1": 294.0, "x2": 885.0, "y2": 509.0}
-# Frame uri secundare
-coordfs1 = {"x1": 568.0, "y1": 306.0, "x2": 746.5763397216797, "y2": 497.0}
-coordfs2 = {"x1": 348.0, "y1": 306.0, "x2": 526.5763397216797, "y2": 497.0}
-coordfs3 = {"x1": 128.0, "y1": 306.0, "x2": 306.5763397216797, "y2": 497.0}
-
 frame_width = coordFrame["x2"] - coordFrame["x1"]
 frame_height = coordFrame["y2"] - coordFrame["y1"]
-fs1_width = coordfs1["x2"] - coordfs1["x1"]
-fs1_height = coordfs1["y2"] - coordfs1["y1"]
-fs2_width = coordfs2["x2"] - coordfs2["x1"]
-fs2_height = coordfs2["y2"] - coordfs2["y1"]
-fs3_width = coordfs3["x2"] - coordfs3["x1"]
-fs3_height = coordfs3["y2"] - coordfs3["y1"]
 
 mainframe = Frame(window, width=frame_width, height=frame_height, bg="#00BFFF")
 mainframe.place(x=coordFrame["x1"], y=coordFrame["y1"])
 
-fs1 = Frame(window, width=fs1_width, height=fs1_height, bg="#D9D9D9")
-fs1.place(x=coordfs1["x1"], y=coordfs1["y1"])
 
-fs2 = Frame(window, width=fs2_width, height=fs2_height, bg="#D9D9D9")
-fs2.place(x=coordfs2["x1"], y=coordfs2["y1"])
-
-fs3 = Frame(window, width=fs3_width, height=fs3_height, bg="#D9D9D9")
-fs3.place(x=coordfs3["x1"], y=coordfs3["y1"])
-
-# Pe frame 1
-canvas1 = Canvas(fs1, width=fs1_width, height=28, bg="#ffffff", highlightthickness=0, relief="ridge")
-canvas1.place(x=0, y=0)
-
-image_image_18 = PhotoImage(
+image_calendar = PhotoImage(
     file=relative_to_assets("image_18.png"))
-img1 = canvas1.create_image(
-    16,
-    15,
-    image=image_image_18
-)
-d1 = canvas1.create_text(
-    40,
-    7,
-    anchor="nw",
-    text=zi[0],
-    fill="#1E1E1E",
-    font=("Rowdies Regular", 16 * -1),
-)
 
-# Pe frame 2
-canvas2 = Canvas(fs2, width=fs2_width, height=28, bg="#ffffff", highlightthickness=0, relief="ridge")
-canvas2.place(x=0, y=0)
-
-image_image_8 = PhotoImage(
-    file=relative_to_assets("image_8.png"))
-image_8 = canvas2.create_image(
-    16,
-    15,
-    image=image_image_8
-)
-d2 = canvas2.create_text(
-    40,
-    7,
-    anchor="nw",
-    text=zi[1],
-    fill="#1E1E1E",
-    font=("Rowdies Regular", 16 * -1),
-)
-
-# Pe frame 3
-canvas3 = Canvas(fs3, width=fs3_width, height=28, bg="#ffffff", highlightthickness=0, relief="ridge")
-canvas3.place(x=0, y=0)
-
-image_image_13 = PhotoImage(
-    file=relative_to_assets("image_13.png"))
-image_13 = canvas3.create_image(
-    16,
-    15,
-    image=image_image_13
-)
-d3 = canvas3.create_text(
-    40,
-    7,
-    anchor="nw",
-    text=zi[2],
-    fill="#1E1E1E",
-    font=("Rowdies Regular", 16 * -1),
-)
+frame1 = frameuri(window, flag="dr", sursa_imagine=image_calendar, text=zi[0])
+frame2 = frameuri(window, flag="mid", sursa_imagine=image_calendar, text=zi[1])
+frame3 = frameuri(window, flag="st", sursa_imagine=image_calendar, text=zi[2])
 
 # Butoane
 button_image_1 = PhotoImage(
