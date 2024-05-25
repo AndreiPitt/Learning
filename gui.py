@@ -2,6 +2,7 @@ from pathlib import Path
 
 from tkinter import *
 from orasidata import *
+from taskuri import taskuri
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\User\Desktop\zona de lucru\myapp\assets\frame0")
@@ -94,7 +95,7 @@ def concat_data(nr: int, luna_an: str):
         if len(luna_an) == 8:
             ziua = s + luna_an
         else:
-            ziua = s+"."+luna_an
+            ziua = s + "." + luna_an
         return ziua
     if len(s) == 1:
         if s == "9":
@@ -153,10 +154,69 @@ def la_stanga():
     fct_ajutatoare_pt_butoane_st_dr("-", a, b, c, p1, p2, p3, x, y, z)
 
 
+def addTaskTab():
+    # x = canvas1.itemcget(d1, "text")
+    add_window.deiconify()
+
+
+def comanda_addButton():
+    creazaTask()
+
+
+def creazaTask():
+    """
+    Poti adauga 5 task uri
+
+    """
+    pozx, pozy = 20, 40
+    if taskuri.nr_taskuri == 0:
+        task = taskuri(fs1, add_entry, x=pozx, y=pozy)
+        lista_taskuri.append(task)
+        print(f"Am {taskuri.nr_taskuri} task uri")
+    elif taskuri.nr_taskuri == 1:
+        pozy = pozy+20
+        task = taskuri(fs1, add_entry, x=pozx, y=pozy)
+        lista_taskuri.append(task)
+        print(f"Am {taskuri.nr_taskuri} task uri")
+    elif taskuri.nr_taskuri == 2:
+        pozy = pozy+40
+        task = taskuri(fs1, add_entry, x=pozx, y=pozy)
+        lista_taskuri.append(task)
+        print(f"Am {taskuri.nr_taskuri} task uri")
+    elif taskuri.nr_taskuri == 3:
+        pozy = pozy+60
+        task = taskuri(fs1, add_entry, x=pozx, y=pozy)
+        lista_taskuri.append(task)
+        print(f"Am {taskuri.nr_taskuri} task uri")
+    elif taskuri.nr_taskuri == 4:
+        pozy = pozy+80
+        task = taskuri(fs1, add_entry, x=pozx, y=pozy)
+        lista_taskuri.append(task)
+        print(f"Am {taskuri.nr_taskuri} task uri")
+
+        print("Ai atins limita maxima de task-uri!!")
+        button_5.configure(state=DISABLED)
+        print(lista_taskuri)
+
+    add_window.iconify()
+
+
 window = Tk()
+add_window = Toplevel(window)
+# edit_window = Toplevel(window)
+
+label1 = Label(add_window, text="Introdu task ul:", bg="#4169E1")
+add_entry = Entry(add_window)
+add_button = Button(add_window, text="ADAUGA", command=comanda_addButton)
+
 
 window.geometry("900x700")
 window.configure(bg="#9D9D9D")
+add_window.geometry("300x150")
+add_window.configure(bg="#4169E1")
+add_window.title("Add task")
+
+lista_taskuri = []
 
 canvas = Canvas(
     window,
@@ -503,7 +563,7 @@ button_5 = Button(
     image=button_image_5,
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: print("button_5 clicked"),
+    command=addTaskTab,
     relief="flat"
 )
 button_5.place(
@@ -512,5 +572,13 @@ button_5.place(
     width=97.0,
     height=35.58536911010742
 )
+
+label1.place(x=100, y=20)
+add_entry.place(x=78, y=50)
+add_button.place(x=110, y=80)
+
 window.resizable(False, False)
+add_window.resizable(width=False, height=False)
+add_window.iconify()
 window.mainloop()
+add_window.mainloop()
