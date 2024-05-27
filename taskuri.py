@@ -1,43 +1,102 @@
 from tkinter import *
+from db import *
 
 
 class taskuri:
-
+    obiecte = lista_taskuri
     nr_taskuri = 0
-    obiecte = []
 
     def __init__(self, root, entry, x, y):
         self.checkbutton = Checkbutton(root, bg="#D9D9D9")
-        self.label = Label(root, bg="#D9D9D9", text=entry.get())
-        entry.delete(0, END)
+        self.label = Label(root, bg="#D9D9D9", text=entry)
+        self.description = ""
         self.checkbutton.place(x=x, y=y)
-        self.label.place(x=2 * x, y=y)
+        self.label.place(x=30 + x, y=y)
         taskuri.nr_taskuri += 1
-        taskuri.obiecte.append(self)
 
     @classmethod
     def creaza_task(cls, root: object, entry, button):
+        nr = len(root.tasks)
+        print(nr)
+        if nr == 0:
 
-        pozx, pozy = 20, 40
-        if taskuri.nr_taskuri == 0:
-            t1 = taskuri(root.frame, entry, x=pozx, y=pozy)
+            t1 = taskuri(root.frame, entry, x=20, y=40)
             root.tasks.append(t1)
-        elif taskuri.nr_taskuri == 1:
-            pozy = pozy + 20
-            t2 = taskuri(root.frame, entry, x=pozx, y=pozy)
+            adauga_in_db(frame_id=root.id, object_name=entry, description="")
+            taskuri.nr_taskuri += 1
+
+        elif nr == 1:
+
+            t2 = taskuri(root.frame, entry, x=20, y=80)
             root.tasks.append(t2)
-        elif taskuri.nr_taskuri == 2:
-            pozy = pozy + 40
-            t3 = taskuri(root.frame, entry, x=pozx, y=pozy)
+            adauga_in_db(frame_id=root.id, object_name=entry, description="")
+            taskuri.nr_taskuri += 1
+
+        elif nr == 2:
+
+            t3 = taskuri(root.frame, entry, x=20, y=120)
             root.tasks.append(t3)
-        elif taskuri.nr_taskuri == 3:
-            pozy = pozy + 60
-            t4 = taskuri(root.frame, entry, x=pozx, y=pozy)
+            adauga_in_db(frame_id=root.id, object_name=entry, description="")
+            taskuri.nr_taskuri += 1
+
+        elif nr == 3:
+
+            t4 = taskuri(root.frame, entry, x=250, y=40)
             root.tasks.append(t4)
-        elif taskuri.nr_taskuri == 4:
-            pozy = pozy + 80
-            t5 = taskuri(root.frame, entry, x=pozx, y=pozy)
+            adauga_in_db(frame_id=root.id, object_name=entry, description="")
+            taskuri.nr_taskuri += 1
+
+        elif nr == 4:
+
+            t5 = taskuri(root.frame, entry, x=250, y=80)
             root.tasks.append(t5)
+            adauga_in_db(frame_id=root.id, object_name=entry, description="")
+            taskuri.nr_taskuri += 1
+
+        elif nr == 5:
+            t6 = taskuri(root.frame, entry, x=250, y=120)
+            root.tasks.append(t6)
+            adauga_in_db(frame_id=root.id, object_name=entry, description="")
+            taskuri.nr_taskuri += 1
 
             print("Ai atins limita maxima de task-uri!!")
             button.configure(state=DISABLED)
+
+    @classmethod
+    def ia_din_db(cls, root, command):
+        nr_tasks = len(root.tasks)
+        tasks = root.tasks
+
+        if nr_tasks == 1:
+            t1 = taskuri(root.frame, tasks[0][2], x=20, y=40)
+        elif nr_tasks == 2:
+            t1 = taskuri(root.frame, tasks[0][2], x=20, y=40)
+            t2 = taskuri(root.frame, tasks[1][2], x=20, y=80)
+        elif nr_tasks == 3:
+            t1 = taskuri(root.frame, tasks[0][2], x=20, y=40)
+            t2 = taskuri(root.frame, tasks[1][2], x=20, y=80)
+            t3 = taskuri(root.frame, tasks[2][2], x=20, y=120)
+        elif nr_tasks == 4:
+            t1 = taskuri(root.frame, tasks[0][2], x=20, y=40)
+            t2 = taskuri(root.frame, tasks[1][2], x=20, y=80)
+            t3 = taskuri(root.frame, tasks[2][2], x=20, y=120)
+            t4 = taskuri(root.frame, tasks[3][2], x=250, y=40)
+        elif nr_tasks == 5:
+            t1 = taskuri(root.frame, tasks[0][2], x=20, y=40)
+            t2 = taskuri(root.frame, tasks[1][2], x=20, y=80)
+            t3 = taskuri(root.frame, tasks[2][2], x=20, y=120)
+            t4 = taskuri(root.frame, tasks[3][2], x=250, y=40)
+            t5 = taskuri(root.frame, tasks[4][2], x=250, y=80)
+        elif nr_tasks == 6:
+            t1 = taskuri(root.frame, tasks[0][2], x=20, y=40)
+            t2 = taskuri(root.frame, tasks[1][2], x=20, y=80)
+            t3 = taskuri(root.frame, tasks[2][2], x=20, y=120)
+            t4 = taskuri(root.frame, tasks[3][2], x=250, y=40)
+            t5 = taskuri(root.frame, tasks[4][2], x=250, y=80)
+            t6 = taskuri(root.frame, tasks[5][2], x=250, y=120)
+            command.configure(state=DISABLED)
+            print("Ai maximul de task-uri disponibile")
+
+    @classmethod
+    def clear(cls):
+        taskuri.nr_taskuri = 0

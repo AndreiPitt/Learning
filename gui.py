@@ -2,9 +2,10 @@ from pathlib import Path
 
 from tkinter import *
 
-from frameuri import frameuri
 from orasidata import *
+from frameuri import frameuri
 from taskuri import taskuri
+
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"C:\Users\User\Desktop\zona de lucru\myapp\assets\frame0")
@@ -60,110 +61,32 @@ def tip_vreme():
         canvas.itemconfig(image_6, image=iconvreme3)
 
 
-def fct_ajutatoare_pt_butoane_st_dr(operator: str, a: object, b: object, c: object, p1, p2, p3, x: str, y: str, z: str):
-    """"
-    Functia asteapta ca argument stringul "+" sau stringul "-"
-    """
-    if operator == "+":
-        p1 = int(p1) + 1
-        p2 = int(p2) + 1
-        p3 = int(p3) + 1
-        a.itemconfig(frame1.text_canvas, text=concat_data(p1, x[2:]))
-        b.itemconfig(frame2.text_canvas, text=concat_data(p2, y[2:]))
-        c.itemconfig(frame3.text_canvas, text=concat_data(p3, z[2:]))
-    elif operator == "-":
-        p1 = int(p1) - 1
-        p2 = int(p2) - 1
-        p3 = int(p3) - 1
-
-        a.itemconfig(frame1.text_canvas, text=concat_data(p1, x[2:]))
-        b.itemconfig(frame2.text_canvas, text=concat_data(p2, y[2:]))
-        c.itemconfig(frame3.text_canvas, text=concat_data(p3, z[2:]))
-
-    else:
-        print("EROARE: Operator invalid")
-
-
-def fara_punct(s: str):
-    if s.endswith('.'):
-        return int(s[:-1])
-    else:
-        return int(float(s))
-
-
-def concat_data(nr: int, luna_an: str):
-    s = str(nr)
-    if len(s) == 2:
-        if len(luna_an) == 8:
-            ziua = s + luna_an
-        else:
-            ziua = s + "." + luna_an
-        return ziua
-    if len(s) == 1:
-        if s == "9":
-            if len(luna_an) == 8:
-                ziua = s + luna_an
-            else:
-                ziua = s + "." + luna_an
-
-        elif s == "1":
-            ziua = s + "." + luna_an
-            button_2.configure(state=DISABLED)
-            print("1 este prima zi din calendar!")
-            print("--------------------------------")
-        elif s == "2":
-            button_2.configure(state=NORMAL)
-            ziua = s + "." + luna_an
-        else:
-            ziua = s + "." + luna_an
-        return ziua
-    else:
-        print("EROARE la functia concat_data")
-        print("HINT: Probabil len(s) este diferit de 1 sau 2")
+def afisaj():
+    for fr in frame.obiecte:
+        if fr[1] == datetime.date(int(zi[0][6:]), int(zi[0][3:5]), int(zi[0][0:2])):
+            frame.id = fr[0]
+            for tsk in taskuri.obiecte:
+                if tsk[1] == frame.id:
+                    frame.tasks.append(tsk)
+    taskuri.ia_din_db(frame, button_5)
 
 
 def la_dreapta():
-    p1, p2, p3 = "", "", ""
-    a, b, c = frame1.canvas, frame2.canvas, frame3.canvas
-
-    x = a.itemcget(frame1.text_canvas, "text")
-    p1 += str(fara_punct(x[0:2]))
-    y = b.itemcget(frame2.text_canvas, "text")
-    p2 += str(fara_punct(y[0:2]))
-    z = c.itemcget(frame3.text_canvas, "text")
-    p3 += str(fara_punct(z[0:2]))
-
-    if a.itemcget(frame1.text_canvas, "text") == zi[0]:
-        print("Esti deja la ziua curenta")
-        print(zi[0])
-        button_1.configure(state=DISABLED)
-    else:
-        fct_ajutatoare_pt_butoane_st_dr("+", a, b, c, p1, p2, p3, x, y, z)
+    pass
 
 
 def la_stanga():
-    button_1.configure(state=NORMAL)
-    p1, p2, p3 = "", "", ""
-    a, b, c = frame1.canvas, frame2.canvas, frame3.canvas
-
-    x = a.itemcget(frame1.text_canvas, "text")
-    p1 += str(fara_punct(x[0:2]))
-    y = b.itemcget(frame2.text_canvas, "text")
-    p2 += str(fara_punct(y[0:2]))
-    z = c.itemcget(frame3.text_canvas, "text")
-    p3 += str(fara_punct(z[0:2]))
-
-    fct_ajutatoare_pt_butoane_st_dr("-", a, b, c, p1, p2, p3, x, y, z)
+    print(frame.canvas.itemcget(frame.text_canvas, "text"))
 
 
 def addTaskTab():
-    # x = canvas1.itemcget(d1, "text")
     add_window.deiconify()
 
 
 def comanda_addButton():
-    taskuri.creaza_task(frame1, entry=add_entry, button=button_5)
-    add_window.iconify()
+    taskuri.creaza_task(frame, entry=add_entry.get(), button=button_5)
+    add_entry.delete(0, END)
+    add_window.withdraw()
 
 
 window = Tk()
@@ -368,6 +291,7 @@ grafic = canvas.create_rectangle(
     fill="#00BFFF",
     outline="")
 
+
 # Frame ul principal - afisaj
 coordFrame = {"x1": 15.0, "y1": 294.0, "x2": 885.0, "y2": 509.0}
 frame_width = coordFrame["x2"] - coordFrame["x1"]
@@ -375,14 +299,21 @@ frame_height = coordFrame["y2"] - coordFrame["y1"]
 
 mainframe = Frame(window, width=frame_width, height=frame_height, bg="#00BFFF")
 mainframe.place(x=coordFrame["x1"], y=coordFrame["y1"])
-
+cv = Canvas(mainframe, width=frame_width, height=frame_height, bg="#00BFFF", bd=0, highlightthickness=0, relief="ridge")
+cv.place(x=0, y=0)
 
 image_calendar = PhotoImage(
-    file=relative_to_assets("image_18.png"))
+    file=relative_to_assets("icon_calendar.png"))
+main_photo = PhotoImage(
+    file=relative_to_assets("mainphoto2.png"))
+mf = cv.create_image(
+    190.0,
+    110.0,
+    image=main_photo
+)
 
-frame1 = frameuri(window, flag="dr", sursa_imagine=image_calendar, text=zi[0])
-frame2 = frameuri(window, flag="mid", sursa_imagine=image_calendar, text=zi[1])
-frame3 = frameuri(window, flag="st", sursa_imagine=image_calendar, text=zi[2])
+frame = frameuri(window, sursa_imagine=image_calendar, text=zi[0], idd=1)
+
 
 # Butoane
 button_image_1 = PhotoImage(
@@ -465,12 +396,27 @@ button_5.place(
     height=35.58536911010742
 )
 
+# Aplerari de functii
+
+# print("--------------")
+# print(frame.tasks)
+# print(frame.obiecte)
+# print("--------------")
+#
+afisaj()
+#
+# print("--------------")
+# print(frame.tasks)
+# print(frame.obiecte)
+# print("--------------")
+
+
 label1.place(x=100, y=20)
 add_entry.place(x=78, y=50)
 add_button.place(x=110, y=80)
 
 window.resizable(False, False)
 add_window.resizable(width=False, height=False)
-add_window.iconify()
+add_window.withdraw()
 window.mainloop()
 add_window.mainloop()
