@@ -61,22 +61,29 @@ def tip_vreme():
         canvas.itemconfig(image_6, image=iconvreme3)
 
 
-def afisaj():
-    for fr in frame.obiecte:
-        if fr[1] == datetime.date(int(zi[0][6:]), int(zi[0][3:5]), int(zi[0][0:2])):
-            frame.id = fr[0]
+def afisaj(root):
+    data_initiala = root.canvas.itemcget(root.text_canvas, "text")
+    day = delimitare_data(data_initiala)
+    for fr in frameuri.obiecte:
+        if str(fr[1]) == day[0]:
+            root.id = fr[0]
             for tsk in taskuri.obiecte:
-                if tsk[1] == frame.id:
-                    frame.tasks.append(tsk)
-    taskuri.ia_din_db(frame, button_5)
+                if tsk[1] == root.id:
+                    root.tasks.append(tsk)
+    taskuri.ia_din_db(root, button_5)
+    print(root.id, data_initiala)
 
 
 def la_dreapta():
-    pass
+    parametrii = frameuri.switch_frame(frame, "+")
+    fr_update = frameuri(window, sursa_imagine=image_calendar, text=parametrii[0])
+    afisaj(fr_update)
 
 
 def la_stanga():
-    print(frame.canvas.itemcget(frame.text_canvas, "text"))
+    parametrii = frameuri.switch_frame(frame, "-")
+    fr_update = frameuri(window, sursa_imagine=image_calendar, text=parametrii[0])
+    afisaj(fr_update)
 
 
 def addTaskTab():
@@ -116,7 +123,6 @@ canvas = Canvas(
 )
 canvas.place(x=0, y=0)
 
-zi = detalii_zile()
 
 image_image_1 = PhotoImage(
     file=relative_to_assets("image_1.png"))
@@ -311,8 +317,8 @@ mf = cv.create_image(
     110.0,
     image=main_photo
 )
-
-frame = frameuri(window, sursa_imagine=image_calendar, text=zi[0], idd=1)
+z = zi_curenta()
+frame = frameuri(window, sursa_imagine=image_calendar, text=z[4])
 
 
 # Butoane
@@ -398,18 +404,10 @@ button_5.place(
 
 # Aplerari de functii
 
-# print("--------------")
-# print(frame.tasks)
-# print(frame.obiecte)
-# print("--------------")
-#
-afisaj()
-#
-# print("--------------")
-# print(frame.tasks)
-# print(frame.obiecte)
-# print("--------------")
+afisaj(frame)
 
+# print(frame.id, frame.canvas.itemcget(frame.text_canvas, "text"))
+# frameuri.switch_frame(frame, "+")
 
 label1.place(x=100, y=20)
 add_entry.place(x=78, y=50)

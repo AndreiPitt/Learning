@@ -5,6 +5,7 @@ from db import *
 class taskuri:
     obiecte = lista_taskuri
     nr_taskuri = 0
+    obiecte_cod = []
 
     def __init__(self, root, entry, x, y):
         self.checkbutton = Checkbutton(root, bg="#D9D9D9")
@@ -13,11 +14,11 @@ class taskuri:
         self.checkbutton.place(x=x, y=y)
         self.label.place(x=30 + x, y=y)
         taskuri.nr_taskuri += 1
+        taskuri.obiecte_cod.append(self)
 
     @classmethod
     def creaza_task(cls, root: object, entry, button):
         nr = len(root.tasks)
-        print(nr)
         if nr == 0:
 
             t1 = taskuri(root.frame, entry, x=20, y=40)
@@ -69,24 +70,34 @@ class taskuri:
 
         if nr_tasks == 1:
             t1 = taskuri(root.frame, tasks[0][2], x=20, y=40)
+            return t1
+
         elif nr_tasks == 2:
             t1 = taskuri(root.frame, tasks[0][2], x=20, y=40)
             t2 = taskuri(root.frame, tasks[1][2], x=20, y=80)
+            return [t1, t2]
+
         elif nr_tasks == 3:
             t1 = taskuri(root.frame, tasks[0][2], x=20, y=40)
             t2 = taskuri(root.frame, tasks[1][2], x=20, y=80)
             t3 = taskuri(root.frame, tasks[2][2], x=20, y=120)
+            return [t1, t2, t3]
+
         elif nr_tasks == 4:
             t1 = taskuri(root.frame, tasks[0][2], x=20, y=40)
             t2 = taskuri(root.frame, tasks[1][2], x=20, y=80)
             t3 = taskuri(root.frame, tasks[2][2], x=20, y=120)
             t4 = taskuri(root.frame, tasks[3][2], x=250, y=40)
+            return [t1, t2, t3, t4]
+
         elif nr_tasks == 5:
             t1 = taskuri(root.frame, tasks[0][2], x=20, y=40)
             t2 = taskuri(root.frame, tasks[1][2], x=20, y=80)
             t3 = taskuri(root.frame, tasks[2][2], x=20, y=120)
             t4 = taskuri(root.frame, tasks[3][2], x=250, y=40)
             t5 = taskuri(root.frame, tasks[4][2], x=250, y=80)
+            return [t1, t2, t3, t4, t5]
+
         elif nr_tasks == 6:
             t1 = taskuri(root.frame, tasks[0][2], x=20, y=40)
             t2 = taskuri(root.frame, tasks[1][2], x=20, y=80)
@@ -96,7 +107,8 @@ class taskuri:
             t6 = taskuri(root.frame, tasks[5][2], x=250, y=120)
             command.configure(state=DISABLED)
             print("Ai maximul de task-uri disponibile")
+            return [t1, t2, t3, t4, t5, t6]
 
     @classmethod
-    def clear(cls):
-        taskuri.nr_taskuri = 0
+    def cleartasks(cls, root):
+        root.tasks.clear()

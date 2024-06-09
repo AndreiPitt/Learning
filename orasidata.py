@@ -1,5 +1,4 @@
 import datetime
-import calendar as cd
 import requests
 
 
@@ -13,25 +12,6 @@ def detaliidatatimp():
     if ziua_curenta == "0":
         ziua_curenta = "7"
     tuplu = (ziua_prescurtata, ziua_intreaga, ora_curenta, ziua_curenta, ceas)
-    return tuplu
-
-
-def detalii_zile():
-    listadezile = []
-    index = 0
-    now = datetime.datetime.now()
-    d = now.strftime('%d.%m.%Y')
-    calendar = cd.Calendar().itermonthdays4(int(now.strftime('%Y')), int(now.strftime('%m')))
-    for el in calendar:
-        zi = str(el[2]) + "." + str(el[1]).replace(f"{el[1]}", f"0{el[1]}") + "." + str(el[0])
-        listadezile.append(zi)
-    for el in listadezile:
-        if el == d:
-            index = listadezile.index(el)
-    azi = listadezile[index]
-    ieri = listadezile[index - 1]
-    alaltaieri = listadezile[index - 2]
-    tuplu = (azi, ieri, alaltaieri, listadezile)
     return tuplu
 
 
@@ -67,6 +47,26 @@ def returneaza_descriere_vremea():
         return "Eroare"
 
 
+def zi_curenta():
+    now = datetime.datetime.now()
+    a = now.strftime('%Y')
+    m = now.strftime('%m')
+    z = now.strftime('%d')
+    tuplu = (int(a), int(m), int(z), a + "-" + m + "-" + z, z+"."+m+"."+a)
+    return tuplu
+
+
+def delimitare_data(text: str):
+    if "-" in text:
+        d = text.split("-")
+        t = (d[2] + "." + d[1] + "." + d[0], d[0], d[1], d[2])
+        return t
+    elif "." in text:
+        d = text.split(".")
+        t = (d[2] + "-" + d[1] + "-" + d[0], d[0], d[1], d[2])
+        return t
+
+
 # Introdu aici cheia ta API obținută de la OpenWeatherMap
 api_key = "33521462be9a9eb3b7970c167d4e2003"
 city_name = "Timisoara"
@@ -81,4 +81,3 @@ response = requests.get(complete_url)
 # Extrage datele în format JSON
 data = response.json()
 # print(data)
-
